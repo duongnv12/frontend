@@ -1,26 +1,31 @@
 // frontend/src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
-import ProjectDetailView from '../views/ProjectDetailView.vue'; // <-- Import component mới
+import ProjectDetailView from '../views/ProjectDetailView.vue';
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    meta: {
+        title: 'Trang chủ - Portfolio của Dương' // <-- Thêm meta title
+    }
   },
   {
-    path: '/projects/:id', // <-- Thêm route này
+    path: '/projects/:id',
     name: 'project-detail',
     component: ProjectDetailView,
-    props: true // Cho phép truyền params làm props vào component
+    props: true,
+    meta: {
+        title: 'Dự án' // Tiêu đề cơ bản, sẽ được cập nhật động sau
+    }
   },
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-  // Thêm hành vi cuộn để quay lại đầu trang khi chuyển route
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition;
@@ -28,6 +33,14 @@ const router = createRouter({
       return { top: 0, behavior: 'smooth' };
     }
   },
+});
+
+// Navigation Guard để cập nhật tiêu đề
+router.beforeEach((to, from, next) => {
+  // Đặt tiêu đề mặc định nếu không có meta title
+  document.title = to.meta.title || 'Portfolio của [Tên của bạn]';
+
+  next();
 });
 
 export default router;
