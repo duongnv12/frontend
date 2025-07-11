@@ -1,38 +1,88 @@
 <template>
-  <section id="contact" class="py-12 bg-gray-100">
+  <section id="contact" class="py-16 md:py-24 bg-gray-900 text-white">
     <div class="container mx-auto px-4">
-      <h2 class="text-4xl font-bold text-center mb-10 text-gray-800">Liên hệ</h2>
-      <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg">
-        <p class="text-center text-lg text-gray-700 mb-6">
-          Bạn có dự án thú vị không? Hay chỉ muốn nói lời chào? Đừng ngần ngại liên hệ với tôi!
-        </p>
+      <h2 class="text-3xl md:text-4xl font-bold font-heading text-center mb-12" data-aos="fade-up">
+        Liên hệ tôi
+      </h2>
 
-        <div class="space-y-6">
-          <div class="flex items-center justify-center">
-            <svg class="h-8 w-8 text-blue-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
-            <a href="mailto:your.email@example.com" class="text-xl text-blue-600 hover:underline">your.email@example.com</a>
-          </div>
-
-          <div class="flex items-center justify-center">
-            <svg class="h-8 w-8 text-green-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.135a11.249 11.249 0 005.422 5.422l1.135-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2H5a2 2 0 01-2-2V5z" />
-            </svg>
-            <span class="text-xl text-gray-700">[Số điện thoại của bạn - Tùy chọn]</span>
-          </div>
+      <div class="flex flex-col md:flex-row items-center justify-center gap-12">
+        <div class="w-full md:w-1/2 bg-gray-800 p-8 rounded-lg shadow-xl" data-aos="fade-right">
+          <h3 class="text-2xl font-bold mb-6">Gửi tin nhắn cho tôi</h3>
+          <form @submit.prevent="submitForm">
+            <div class="mb-4">
+              <label for="name" class="block text-gray-300 text-sm font-bold mb-2">Tên của bạn</label>
+              <input
+                type="text"
+                id="name"
+                v-model="formData.name"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 border-gray-600"
+                required
+              />
+            </div>
+            <div class="mb-4">
+              <label for="email" class="block text-gray-300 text-sm font-bold mb-2">Email của bạn</label>
+              <input
+                type="email"
+                id="email"
+                v-model="formData.email"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 border-gray-600"
+                required
+              />
+            </div>
+            <div class="mb-6">
+              <label for="message" class="block text-gray-300 text-sm font-bold mb-2">Tin nhắn</label>
+              <textarea
+                id="message"
+                v-model="formData.message"
+                rows="5"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 border-gray-600"
+                required
+              ></textarea>
+            </div>
+            <div class="flex items-center justify-between">
+              <button
+                type="submit"
+                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full focus:outline-none focus:shadow-outline transition duration-300"
+                :disabled="loading"
+              >
+                <span v-if="loading">Đang gửi...</span>
+                <span v-else>Gửi tin nhắn</span>
+              </button>
+            </div>
+            <p v-if="successMessage" class="text-green-400 mt-4 text-center">{{ successMessage }}</p>
+            <p v-if="errorMessage" class="text-red-400 mt-4 text-center">{{ errorMessage }}</p>
+          </form>
         </div>
 
-        <div class="mt-8 text-center">
-          <h3 class="text-2xl font-bold mb-4 text-gray-800">Kết nối với tôi</h3>
-          <div class="flex justify-center space-x-6">
-            <a href="https://linkedin.com/in/yourusername" target="_blank" class="text-blue-700 hover:text-blue-900 transition duration-300">
-              <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" class="w-10 h-10" />
+        <div class="w-full md:w-1/3 text-center md:text-left" data-aos="fade-left">
+          <h3 class="text-2xl font-bold mb-6">Kết nối với tôi</h3>
+          <p class="mb-6 text-gray-300">
+            Bạn cũng có thể tìm thấy tôi trên các nền tảng sau:
+          </p>
+          <div class="flex justify-center md:justify-start space-x-6">
+            <a
+              href="https://linkedin.com/in/yourprofile"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-blue-400 hover:text-blue-300 transition duration-300 transform hover:scale-110"
+            >
+              <font-awesome-icon :icon="['fab', 'linkedin']" class="text-4xl" />
             </a>
-            <a href="https://github.com/yourusername" target="_blank" class="text-gray-800 hover:text-gray-900 transition duration-300">
-              <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" class="w-10 h-10" />
+            <a
+              href="https://github.com/yourusername"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-gray-400 hover:text-gray-300 transition duration-300 transform hover:scale-110"
+            >
+              <font-awesome-icon :icon="['fab', 'github']" class="text-4xl" />
             </a>
-            </div>
+            <a
+              href="mailto:your_email@example.com"
+              class="text-red-400 hover:text-red-300 transition duration-300 transform hover:scale-110"
+            >
+              <font-awesome-icon :icon="['fas', 'envelope']" class="text-4xl" />
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -40,8 +90,50 @@
 </template>
 
 <script>
+import { ref, getCurrentInstance } from 'vue';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faLinkedin, faGithub } from '@fortawesome/free-brands-svg-icons';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+
+library.add(faLinkedin, faGithub, faEnvelope);
+
 export default {
   name: 'ContactSection',
+  setup() {
+    const formData = ref({
+      name: '',
+      email: '',
+      message: '',
+    });
+    const loading = ref(false);
+    const successMessage = ref('');
+    const errorMessage = ref('');
+    const { proxy } = getCurrentInstance();
+
+    const submitForm = async () => {
+      loading.value = true;
+      successMessage.value = '';
+      errorMessage.value = '';
+
+      try {
+        const response = await proxy.$axios.post('/contact', formData.value);
+        successMessage.value = response.data.message;
+        formData.value = { name: '', email: '', message: '' }; // Reset form
+      } catch (error) {
+        errorMessage.value = error.response?.data?.message || 'Không thể gửi tin nhắn. Vui lòng thử lại.';
+      } finally {
+        loading.value = false;
+      }
+    };
+
+    return {
+      formData,
+      loading,
+      successMessage,
+      errorMessage,
+      submitForm,
+    };
+  },
 };
 </script>
 

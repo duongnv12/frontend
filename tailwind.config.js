@@ -8,11 +8,17 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        // Đặt tên font chính của bạn (ví dụ: 'sans' sẽ là font mặc định)
-        sans: ['Roboto', 'sans-serif'],
-        // Font cho tiêu đề hoặc các phần nhấn mạnh
-        heading: ['Poppins', 'sans-serif'],
+        // Font chính cho nội dung (body text)
+        sans: ['Inter', 'sans-serif'],
+        // Font cho tiêu đề (headings)
+        heading: ['Montserrat', 'sans-serif'],
       },
+      // Thêm các màu sắc tùy chỉnh nếu muốn (như đã có)
+      colors: {
+        primary: '#3B82F6', // Blue-600
+        secondary: '#A855F7', // Purple-600
+        accent: '#FACC15', // Yellow-400
+      }
     },
   },
   plugins: [],

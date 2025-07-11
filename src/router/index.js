@@ -1,4 +1,3 @@
-// frontend/src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import ProjectDetailView from '../views/ProjectDetailView.vue';
@@ -9,7 +8,7 @@ const routes = [
     name: 'home',
     component: HomeView,
     meta: {
-        title: 'Trang chủ - Portfolio của Dương' // <-- Thêm meta title
+        title: 'Trang chủ - Portfolio của Dương'
     }
   },
   {
@@ -18,7 +17,7 @@ const routes = [
     component: ProjectDetailView,
     props: true,
     meta: {
-        title: 'Dự án' // Tiêu đề cơ bản, sẽ được cập nhật động sau
+        title: 'Chi tiết dự án' // Đây là tiêu đề mặc định, sẽ được cập nhật động trong component
     }
   },
 ];
@@ -35,10 +34,10 @@ const router = createRouter({
   },
 });
 
-// Navigation Guard để cập nhật tiêu đề
+// Navigation Guard để cập nhật tiêu đề trang
 router.beforeEach((to, from, next) => {
-  // Đặt tiêu đề mặc định nếu không có meta title
-  document.title = to.meta.title || 'Portfolio của [Tên của bạn]';
+  // Đặt tiêu đề mặc định từ meta nếu có, hoặc tiêu đề chung
+  document.title = to.meta.title || 'Portfolio của Dương';
 
   next();
 });
